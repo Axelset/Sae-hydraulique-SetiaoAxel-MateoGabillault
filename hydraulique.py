@@ -5,7 +5,7 @@ prodelec=[]
 stockhydrau=[]
 annéehydrau=[]
 consoelecpompage=[]
-
+datesprodhydrau=[]
 
 with open('evoproductionelec.csv',newline='') as csvfile:
     reader=csv.reader(csvfile,delimiter=';')
@@ -30,18 +30,45 @@ del stockhydrau[0]
 del consoelecpompage[0]
                                 
         
-prodelec=[float(prodelec[i+1][2].replace(",",".")) for i in range(len(prodelec)-1)]
-print(prodelec)
-print(type(prodelec[0]))
+prodelechydrau=[float(ligne[2].replace(",",".")) for ligne in prodelec if ligne[1]=="Production hydraulique"]
+datesprodhydrau= [ligne[0] for ligne in prodelec if ligne[1]=="Production hydraulique"]
 
+
+print(prodelechydrau)
+#print(type(prodelec[0]))
+print(datesprodhydrau)
+
+
+consoannée=[consoelecpompage[i+1][0]for i in range(len(consoelecpompage)-1)]
 consoelecpompage=[float(consoelecpompage[i+1][2].replace(",",".")) for i in range(len(consoelecpompage)-1)]
-print(consoelecpompage)
+#print(consoelecpompage)
 
-annéehydrau=[stockhydrau[i+1][0]for i in range(len(stockhydrau)-1)]
-print(annéehydrau)
 
+
+
+semainehydraustock=[stockhydrau[i+1][0]for i in range(len(stockhydrau)-1)]
+moisstock=[(i//4)+1 for i in range(len(stockhydrau))]
+#print(annéehydraustock)
 stockhydrau=[float(stockhydrau[i+1][2].replace(",",".")) for i in range(len(stockhydrau)-1)]
-print(stockhydrau)
+#print(stockhydrau)
+
+
+#écriture en mois pour la lecture du graphique
+moisconso= list(range(1,len(consoannée)+1))
+moisprod= list(range(1,len(datesprodhydrau)+1))
+moisstock=[(i//4)+1 for i in range(len(stockhydrau))]
 
 
 
+
+from matplotlib import pyplot as plt
+
+
+plt.plot(moisconso,consoelecpompage,color='b')
+plt.plot(moisprod,prodelechydrau,color='r')
+plt.plot(moisstock,stockhydrau,color='y')
+
+plt.title("Température sur l'altitude")
+plt.ylabel('stock (GWh)')
+plt.xlabel('mois de 2014 à 2025')
+plt.show()
