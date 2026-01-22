@@ -47,7 +47,7 @@ plt.plot(moisconso,consoelecpompage,color='b')
 plt.plot(moisprod,prodelechydrau,color='r')
 
 
-plt.title("Température sur l'altitude")
-plt.ylabel('stock (GWh)')
+plt.title("hydraulique sur 11 ans")
+plt.ylabel('énergie (GWh)')
 plt.xlabel('mois de 2014 à 2025')
 plt.show()
